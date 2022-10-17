@@ -7,6 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * The class represents an instructor-employee.
+ *
+ */
 @Entity
 @Table(name = "tbl_employees")
 @Data

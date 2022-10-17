@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 
-
+/**
+ * The class handles endpoints related to the days and hours of driving lessons.
+ *
+ */
 @Controller
 public class DayController {
 
@@ -31,6 +34,10 @@ public class DayController {
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Allows selecting day of driving lessons for the selected instructor by customer
+     *
+     */
     @GetMapping("/user/addDayForm")
     public ModelAndView addDayForm(@RequestParam Long employeeId){
 
@@ -45,6 +52,10 @@ public class DayController {
         return mav;
     }
 
+    /**
+     * Allows selecting day of driving lessons for the selected customer and instructor by admin
+     *
+     */
     @GetMapping("/admin/addDayFormAdmin")
     public ModelAndView addDayFormAdmin(@RequestParam Long employeeId, @RequestParam Long userId){
 
@@ -58,13 +69,21 @@ public class DayController {
         return mav;
     }
 
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    /**
+     * Allows saving chosen day of driving lessons for the selected instructor in the database by customer
+     *
+     */
+    @Secured({"ROLE_USER"})
     @PostMapping("/saveDay")
     public String saveDay(@ModelAttribute Day day){
         day = dayService.recordingDayToDBIfDoesntExistYetForTheSpecifiedEmployee(day);
         return "redirect:/user/chooseHours?dayId="+day.getId();
     }
 
+    /**
+     * Allows saving chosen day of driving lessons for the selected instructor in the database by customer
+     *
+     */
     @Secured("ROLE_ADMIN")
     @PostMapping("/saveDayAdmin")
     public String saveDay(@ModelAttribute Day day,@RequestParam Long userId){
@@ -72,7 +91,11 @@ public class DayController {
         return "redirect:/admin/chooseHoursAdmin?dayId="+day.getId()+"&userId="+userId;
     }
 
-    @GetMapping("/admin/chooseHoursAdmin")//-> http://localhost:8080/chooseHours?dayId=4
+    /**
+     * Allows selecting hours of driving lessons for the selected customer and  instructor on the selected day by admin
+     *
+     */
+    @GetMapping("/admin/chooseHoursAdmin")
     public ModelAndView addHoursToDayAdminForm(@RequestParam Long dayId, @RequestParam Long userId) {
         Day loadedDay = dayRepository.findById(dayId).get();
         ModelAndView mav = new ModelAndView("admin/hours-to-choose-admin");
@@ -82,7 +105,11 @@ public class DayController {
         return mav;
     }
 
-    @GetMapping("/user/chooseHours")//-> http://localhost:8080/chooseHours?dayId=4
+    /**
+     * Allows selecting hours of driving lessons for the selected instructor on the selected day by customer
+     *
+     */
+    @GetMapping("/user/chooseHours")
     public ModelAndView addHoursToDayForm(@RequestParam Long dayId) {
         Day loadedDay = dayRepository.findById(dayId).get();
         ModelAndView mav = new ModelAndView("user/hours-to-choose");
@@ -92,6 +119,10 @@ public class DayController {
         return mav;
     }
 
+    /**
+     * Allows selecting hours of driving lessons for the selected instructor on the selected day
+     *
+     */
     @Secured({"ROLE_USER", "ROLE_ADMIN"})
     @PostMapping("/saveHoursToDay")
     public String saveHoursToDay(@ModelAttribute Day day){
@@ -100,6 +131,10 @@ public class DayController {
         return "redirect:/";
     }
 
+    /**
+     * Allows saving hours of driving lessons for the selected customer and  instructor on the selected day by admin
+     *
+     */
     @Secured("ROLE_ADMIN")
     @PostMapping("/saveHoursToDayAdmin")
     public String saveHoursToDay(@ModelAttribute Day day, @RequestParam Long userId){

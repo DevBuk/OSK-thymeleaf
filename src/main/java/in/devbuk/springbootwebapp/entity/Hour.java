@@ -8,6 +8,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * The class represents a work-hour for instructor-employee (and hour lesson for customer-user).
+ *
+ */
 @Getter
 @Setter
 @NoArgsConstructor

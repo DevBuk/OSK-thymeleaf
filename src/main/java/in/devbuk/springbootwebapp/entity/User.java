@@ -9,7 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
+/**
+ * The class represents a customer-user.
+ *
+ */
 @Entity
 @Table
 @Data
