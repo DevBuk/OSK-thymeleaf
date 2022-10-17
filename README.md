@@ -2,6 +2,7 @@
 Web application for servicing students in the driver training center. The purpose of the application is to solve the problem related to the manual enrollment by students in a driver training center for given driving hours.
 The application allows the user-customers to:
 - logging in and logging out of the application
+- changing the account password
 - selecting the "Remember me" option when logging in
 - signing up for lessons with instructors of user choice on days and hours that are convenient for user.
 - displaying a summary of user lessons
