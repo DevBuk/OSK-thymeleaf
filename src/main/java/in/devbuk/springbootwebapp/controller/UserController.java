@@ -91,7 +91,7 @@ public class UserController {
 
     @GetMapping("/showUpdatePanelRow")
     public ModelAndView showUpdatePanelRow(@RequestParam Long hourId) {
-        ModelAndView mav = new ModelAndView("panel-edition");
+        ModelAndView mav = new ModelAndView("user/panel-edition");
         Hour hour = hourRepository.findById(hourId).get();
         User user = hour.getUser();
         Day day = hour.getDay();
@@ -99,7 +99,7 @@ public class UserController {
         mav.addObject("loadedDay", day);
         return mav;
     }
-// -----------------------------------------
+
     @GetMapping("/user/updateUserSettings")
     public ModelAndView updateUserSettings() {
         ModelAndView mav = new ModelAndView("user/settings");

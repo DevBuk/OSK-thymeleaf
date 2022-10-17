@@ -20,6 +20,11 @@ public class DayService {
     @Autowired
     private DayRepository dayRepository;
 
+
+    /**
+     * Creates hours list for specific driving day for specified instructor (employee)
+     *
+     */
     public List<Hour> creatingHoursListForDrivingDay(){
         List<Hour> hoursList = new ArrayList<>();
 
@@ -44,7 +49,12 @@ public class DayService {
         return hoursList;
     }
 
-    public Day recordingDayToDBIfDoesntExistYetForTheSpecifiedEmployee(Day day){
+    /**
+     *Checks the specific day for the specified instructor (employee) exist in database
+     * if not it creates list of hours for that specified day and saves that day in database
+     *
+     */
+    public Day savingDayToDBIfDoesntExistYetForTheSpecifiedEmployee(Day day){
         Employee specifiedEmployee = day.getEmployee();
         List<Day> listOfDay =  specifiedEmployee.getDaysOfEmployee();
         boolean sensor = false;
@@ -62,6 +72,10 @@ public class DayService {
         return day;
     }
 
+    /**
+     * Gets username of current user.
+     *
+     */
     public String getUsernameOfCurrentUser (){
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username;
@@ -73,17 +87,17 @@ public class DayService {
         return username;
     }
 
+    /**
+     *Assigns current user to hours selected by him specified day for specified instructor
+     *
+     */
     public Day assigningCurrentUserToHoursSelectedByHimSpecifiedDay(Day day, User currentUser){
         List<Hour>listOfHours = day.getHour();
         for (Hour oneHour : listOfHours){
             if(oneHour.getLocked() == true && oneHour.getUser() == null ){
                 oneHour.setUser(currentUser);
             }
-            if(oneHour.getLocked() == false && oneHour.getUser() != null ){
-                oneHour.setUser(null);
-            }
         }
         return day;
     }
-
 }

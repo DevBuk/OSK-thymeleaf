@@ -34,7 +34,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index.html").permitAll()
                 .antMatchers("/user/**").hasRole("USER")
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/panel-edition.html").hasAnyRole("ADMIN", "USER")
                 .and()
                 .formLogin()
                 .loginProcessingUrl("/signin")

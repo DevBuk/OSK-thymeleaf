@@ -37,7 +37,7 @@
                 <td th:text="${hour.user.name +' '+ hour.user.surname}"></td>
                 <td th:text="${hour.day.employee.name +' '+ hour.day.employee.surname}"></td>
                 <td>
-                    <a th:href="@{/showUpdatePanelRow(hourId=${hour.id})}" class="btn btn-info">Update</a>
+                    <a th:href="@{/admin/chooseHoursAdmin(dayId=${hour.day.id}, userId=${hour.user.id})}" class="btn btn-info">Update</a>
                 </td>
             </div>
         </tr>

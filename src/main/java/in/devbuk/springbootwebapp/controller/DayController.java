@@ -44,7 +44,6 @@ public class DayController {
         ModelAndView mav = new ModelAndView("user/add-day-form");
         Employee employee = employeeRepository.findById(employeeId).get();
         Day newDay = new Day();
-
         User currentUser = userRepository.findByUsername(dayService.getUsernameOfCurrentUser());
         mav.addObject("day", newDay);
         mav.addObject("employee", employee);
@@ -70,29 +69,29 @@ public class DayController {
     }
 
     /**
-     * Allows saving chosen day of driving lessons for the selected instructor in the database by customer
+     * Allows saving chosen day of driving lessons for the selected instructor in the database (if it doesn't exist yet) by customer
      *
      */
     @Secured({"ROLE_USER"})
     @PostMapping("/saveDay")
     public String saveDay(@ModelAttribute Day day){
-        day = dayService.recordingDayToDBIfDoesntExistYetForTheSpecifiedEmployee(day);
+        day = dayService.savingDayToDBIfDoesntExistYetForTheSpecifiedEmployee(day);
         return "redirect:/user/chooseHours?dayId="+day.getId();
     }
 
     /**
-     * Allows saving chosen day of driving lessons for the selected instructor in the database by customer
+     * Allows saving chosen day of driving lessons for the selected instructor in the database (if it doesn't exist yet) by admin
      *
      */
     @Secured("ROLE_ADMIN")
     @PostMapping("/saveDayAdmin")
     public String saveDay(@ModelAttribute Day day,@RequestParam Long userId){
-        day = dayService.recordingDayToDBIfDoesntExistYetForTheSpecifiedEmployee(day);
+        day = dayService.savingDayToDBIfDoesntExistYetForTheSpecifiedEmployee(day);
         return "redirect:/admin/chooseHoursAdmin?dayId="+day.getId()+"&userId="+userId;
     }
 
     /**
-     * Allows selecting hours of driving lessons for the selected customer and  instructor on the selected day by admin
+     * Allows selecting hours of driving lessons for the selected customer and instructor on the selected day by admin
      *
      */
     @GetMapping("/admin/chooseHoursAdmin")
@@ -112,7 +111,7 @@ public class DayController {
     @GetMapping("/user/chooseHours")
     public ModelAndView addHoursToDayForm(@RequestParam Long dayId) {
         Day loadedDay = dayRepository.findById(dayId).get();
-        ModelAndView mav = new ModelAndView("user/hours-to-choose");
+        ModelAndView mav = new ModelAndView("user/panel-edition");
         User currentUser = userRepository.findByUsername(dayService.getUsernameOfCurrentUser());
         mav.addObject("currentUser", currentUser);
         mav.addObject("loadedDay", loadedDay);
@@ -120,10 +119,10 @@ public class DayController {
     }
 
     /**
-     * Allows selecting hours of driving lessons for the selected instructor on the selected day
+     * Allows selecting available hours of driving lessons for the selected instructor on the selected day by user
      *
      */
-    @Secured({"ROLE_USER", "ROLE_ADMIN"})
+    @Secured({"ROLE_USER"})
     @PostMapping("/saveHoursToDay")
     public String saveHoursToDay(@ModelAttribute Day day){
         User currentUser = userRepository.findByUsername(dayService.getUsernameOfCurrentUser());
@@ -132,7 +131,7 @@ public class DayController {
     }
 
     /**
-     * Allows saving hours of driving lessons for the selected customer and  instructor on the selected day by admin
+     * Allows selecting available hours of driving lessons for the selected instructor on the selected day by user
      *
      */
     @Secured("ROLE_ADMIN")
@@ -140,6 +139,6 @@ public class DayController {
     public String saveHoursToDay(@ModelAttribute Day day, @RequestParam Long userId){
         User currentUser = userRepository.getById(userId);
         dayRepository.save(dayService.assigningCurrentUserToHoursSelectedByHimSpecifiedDay(day,currentUser));
-        return "redirect:/";
+        return "redirect:/admin/adminPanel";
     }
 }

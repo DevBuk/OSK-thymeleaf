@@ -15,7 +15,6 @@
     <form th:action="@{/saveHoursToDay}" th:object="${loadedDay}" method="POST">
         <input type="date" th:field="*{drivingDay}" placeholder="Enter name" readonly class="form-control col-4 mb-4"/>
         <input type="hidden" th:field="*{id}" placeholder="Enter name" class="form-control col-4 mb-4"/>
-
         <table>
             <thead>
             <tr>
@@ -41,7 +40,6 @@
                     <td><input type="checkbox" th:field="*{hour[__${itemStat.index}__].locked}" /></td>
                     <td><input type="text" readonly th:field="*{hour[__${itemStat.index}__].name}" /></td>
                 </div>
-
                 <div th:if="${book.locked == true}">
                     <div th:if="${book.user.id} eq ${currentUser.id}">
                         <td><input type="hidden" th:field="*{hour[__${itemStat.index}__].id}" /></td>
