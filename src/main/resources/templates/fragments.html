@@ -38,6 +38,10 @@
                     <a class="nav-link" href="#" th:href="@{~/user/showEmployeesForClient}">Add the lesson</a>
                 </li>
                 <li class="nav-item">
+                <li sec:authorize="hasRole('ROLE_USER')" class="nav-item">
+                    <a class="nav-link" href="#" th:href="@{~/user/updateUserSettings}">Settings</a>
+                </li>
+                <li class="nav-item">
                                 <li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
                     <a class="nav-link" href="#" th:href="@{~/admin/showEmployees}">List employees</a>
                 </li>

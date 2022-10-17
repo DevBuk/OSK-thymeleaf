@@ -99,5 +99,22 @@ public class UserController {
         mav.addObject("loadedDay", day);
         return mav;
     }
+// -----------------------------------------
+    @GetMapping("/user/updateUserSettings")
+    public ModelAndView updateUserSettings() {
+        ModelAndView mav = new ModelAndView("user/settings");
+        User currentUser = userRepository.findByUsername(userService.getUsernameOfCurrentUser());
+        mav.addObject("currentUser", currentUser);
+        return mav;
+    }
+
+    @Secured("ROLE_USER")
+    @PostMapping("/saveUserSettings")
+    public String saveUserSettings(@ModelAttribute User user) {
+        String toEncodingPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(toEncodingPassword);
+        userRepository.save(user);
+        return "redirect:/index";
+    }
 
 }
