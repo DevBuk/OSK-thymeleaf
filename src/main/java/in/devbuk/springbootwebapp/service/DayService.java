@@ -16,10 +16,8 @@ import java.util.List;
 @Service
 public class DayService {
 
-
     @Autowired
     private DayRepository dayRepository;
-
 
     /**
      * Creates hours list for specific driving day for specified instructor (employee)

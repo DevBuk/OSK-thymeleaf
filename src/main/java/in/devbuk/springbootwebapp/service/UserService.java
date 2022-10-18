@@ -4,8 +4,6 @@ import in.devbuk.springbootwebapp.entity.Hour;
 import in.devbuk.springbootwebapp.entity.User;
 import in.devbuk.springbootwebapp.repository.HourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,6 +31,10 @@ public class UserService {
         return userHours;
     }
 
+    /**
+     *Returns "true" if the specified user is assigned to any driving lesson
+     *
+     */
     public boolean ifUserIsAssignedToAnyDrivingClass(HourRepository hourRepository, Long userId){
         List<Hour> hourList = hourRepository.findAll();
         for(Hour hour : hourList){

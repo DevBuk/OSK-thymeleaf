@@ -15,6 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
+/**
+ * The class handles endpoints related to the customer-users
+ *
+ */
 @Controller
 public class UserController {
 
@@ -30,6 +34,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /**
+     *Displays the list of the all customer-users
+     *
+     */
     @GetMapping("/admin/showUsers")
     public ModelAndView showUsers() {
         ModelAndView mav = new ModelAndView("admin/list-users");
@@ -38,6 +46,10 @@ public class UserController {
         return mav;
     }
 
+    /**
+     *Allows getting data about the new customer-user by displaying a form
+     *
+     */
     @GetMapping("/admin/addUserForm")
     public ModelAndView addUserForm() {
         ModelAndView mav = new ModelAndView("admin/add-user-form");
@@ -46,6 +58,10 @@ public class UserController {
         return mav;
     }
 
+    /**
+     *Enables the modification of previously entered data about the customer-user by displaying a completed form
+     *
+     */
     @GetMapping("/admin/showUpdateUserForm")
     public ModelAndView showUpdateForm(@RequestParam Long userId) {
         ModelAndView mav = new ModelAndView("admin/add-user-form");
@@ -54,6 +70,10 @@ public class UserController {
         return mav;
     }
 
+    /**
+     *Saves data about the customer-user provided in the form
+     *
+     */
     @Secured("ROLE_ADMIN")
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute User user) {
@@ -63,6 +83,10 @@ public class UserController {
         return "redirect:/admin/showUsers";
     }
 
+    /**
+     *Deletes the user if the user is not assigned to any driving lesson
+     *
+     */
     @Secured("ROLE_ADMIN")
     @GetMapping("/deleteUser")
     public String deleteUser(@RequestParam Long userId) {
@@ -73,14 +97,22 @@ public class UserController {
         return "redirect:/admin/showUsers";
     }
 
+    /**
+     *Displays the list of the all booked driving lessons for the whole application
+     *
+     */
     @GetMapping("/admin/adminPanel")
-    public ModelAndView showEmployees() {
+    public ModelAndView showAdminPanel() {
         ModelAndView mav = new ModelAndView("/admin/admin-panel");
         List<Hour> hourList = hourRepository.findAll();
         mav.addObject("hours", hourList);
         return mav;
     }
 
+    /**
+     *Displays the list of the all booked driving lessons specified customer-user
+     *
+     */
     @GetMapping("/user/userPanel")
     public ModelAndView myLessons() {
     ModelAndView mav = new ModelAndView("user/user-panel");
@@ -89,6 +121,10 @@ public class UserController {
     return mav;
     }
 
+    /**
+     *Allows the customer-user updating the driving lesson hour that was previously booked on the specific day with the specific instructor
+     *
+     */
     @GetMapping("/showUpdatePanelRow")
     public ModelAndView showUpdatePanelRow(@RequestParam Long hourId) {
         ModelAndView mav = new ModelAndView("user/panel-edition");
@@ -100,6 +136,10 @@ public class UserController {
         return mav;
     }
 
+    /**
+     *Allows the customer-user to update in form the account details of his profile
+     *
+     */
     @GetMapping("/user/updateUserSettings")
     public ModelAndView updateUserSettings() {
         ModelAndView mav = new ModelAndView("user/settings");
@@ -108,6 +148,10 @@ public class UserController {
         return mav;
     }
 
+    /**
+     *Allows the customer-user to save data of his profile details account put in the form
+     *
+     */
     @Secured("ROLE_USER")
     @PostMapping("/saveUserSettings")
     public String saveUserSettings(@ModelAttribute User user) {

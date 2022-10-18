@@ -28,6 +28,10 @@ public class EmployeeController {
     @Autowired
     private HourRepository hourRepository;
 
+    /**
+     *Displays the list of the all instructor-employees
+     *
+     */
     @GetMapping("/admin/showEmployees")
     public ModelAndView showEmployees() {
         ModelAndView mav = new ModelAndView("admin/list-employees");
