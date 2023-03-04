@@ -15,9 +15,9 @@
     <hr/>
     <form method="POST" th:action="@{/saveUser}" th:object="${user}">
         <input class="form-control col-4 mb-4" placeholder="Enter username" th:field="*{username}" type="text"/>
-        <input class="form-control col-4 mb-4" placeholder="Enter password" th:field="*{password}" type="text"/>
+        <input class="form-control col-4 mb-4" placeholder="Enter new password" th:field="*{password}" type="password" th:value="*{password}"/>
         <input class="form-control col-4 mb-4" placeholder="Enter name" th:field="*{name}" type="text"/>
-        <input class="form-control col-4 mb-4" placeholder="Enter suername" th:field="*{surname}" type="text"/>
+        <input class="form-control col-4 mb-4" placeholder="Enter username" th:field="*{surname}" type="text"/>
         <input class="form-control col-4 mb-4" placeholder="Enter role" th:field="*{roles}" type="text"/>
         <input class="form-control col-4 mb-4" placeholder="Enter activity" th:field="*{active}" type="number"/>
         <button class="btn btn-primary" type="submit">Save</button>
